@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Banner Showcase - All Formats</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/heroicons/2.1.1/24/outline/css/heroicons.min.css" rel="stylesheet">
+    <style>
+        /* Base styles */
+        .ad-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9e9e9;
+            border: 2px dashed #cccccc;
+            color: #888888;
+            font-family: monospace;
+            font-size: 1.25rem;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .ad-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .ad-label {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 2px 6px;
+            font-size: 10px;
+            border-radius: 4px;
+            font-family: sans-serif;
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes slide-in-bottom {
+            0% { transform: translateY(100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slide-in-from-right {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slide-in-from-left {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fade-in {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .animate-slide-in-bottom { animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both; }
+        .video-slider-ad.visible { animation: slide-in-from-right 0.5s ease-out forwards; }
+        .floater-ad-br.visible { animation: slide-in-from-right 0.5s ease-out forwards; }
+        .floater-ad-bl.visible { animation: slide-in-from-left 0.5s ease-out forwards; }
+        .interstitial-ad.visible { animation: fade-in 0.3s ease-in-out; }
+
+        /* Skin Ad specific styles */
+        .skin-ad {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 160px; /* Standard skin ad width */
+            z-index: 0;
+            display: none; /* Hidden on mobile */
+        }
+        .skin-ad-left { left: 0; }
+        .skin-ad-right { right: 0; }
+
+        /* Centered content with space for skin ads */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+        
+        /* Media query for desktop to show skin ads */
+        @media (min-width: 1560px) { /* 1200px content + 160px left + 160px right + some padding */
+            .skin-ad { display: block; }
+            .content-wrapper { margin: 0 160px; max-width: none; }
+        }
+
+        /* Expandable Ad styles */
+        .expandable-ad-container {
+            max-height: 90px;
+            transition: max-height 0.5s ease-in-out;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .expandable-ad-container.expanded {
+            max-height: 250px;
+        }
+
+        /* Content Locker Styles */
+        .content-locked .locked-text {
+            filter: blur(8px);
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    
+    <!-- Ad Type: Background Skin Ad -->
+    <div class="skin-ad skin-ad-left ad-placeholder">
+        <img src="https://picsum.photos/160/1080?random=10" alt="Left Skin Ad">
+        <span class="ad-label">Advertisement</span>
+    </div>
+    <div class="skin-ad skin-ad-right ad-placeholder">
+        <img src="https://picsum.photos/160/1080?random=11" alt="Right Skin Ad">
+        <span class="ad-label">Advertisement</span>
+    </div>
+
+    <div class="content-wrapper bg-gray-100">
+        <!-- Header -->
+        <header class="bg-white shadow-md sticky top-0 z-30">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-900">Ad Showcase Today</h1>
+                <div class="space-x-4 text-gray-600 hidden md:block">
+                    <a href="#banners" class="hover:text-blue-600">Banners</a>
+                    <a href="#video" class="hover:text-blue-600">Video</a>
+                    <a href="#native" class="hover:text-blue-600">Native</a>
+                    <a href="#dynamic" class="hover:text-blue-600">Dynamic</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <div class="container mx-auto p-4 lg:p-6">
+            
+            <!-- Ad Type: Leaderboard Banner -->
+            <section id="banners" class="mb-8">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Ad Type: Leaderboard Banner (728x90)</h2>
+                <div class="w-full max-w-[728px] mx-auto bg-white p-2 rounded shadow">
+                    <div class="ad-placeholder" style="width: 100%; aspect-ratio: 728 / 90;">
+                        <img src="https://picsum.photos/728/90?random=1" alt="Ad 728x90">
+                        <span class="absolute text-white bg-black bg-opacity-50 p-2 rounded">728x90 Banner Ad</span>
+                        <span class="ad-label">Advertisement</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Main Article Section -->
+                <main id="main-content" class="lg:col-span-8">
+                    <article class="bg-white p-6 rounded-lg shadow-lg">
+                        <h1 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">The Over-Monetized Web: A Frustrating Ad Experience</h1>
+                        <p class="text-gray-500 mb-6">Published on <time datetime="2024-05-21">May 21, 2024</time></p>
+                        
+                        <p class="mb-4 leading-relaxed">This page demonstrates an aggressive ad strategy. Clicking anywhere on this article will trigger a pop-up. An exit-intent ad will appear if you try to leave. Multiple floating ads will appear as you scroll. This is designed to show how over-monetization can impact user experience.</p>
+                        
+                        <!-- Ad Type: Medium Rectangle Banner -->
+                        <section class="my-8">
+                            <h2 class="text-xl font-semibold mb-3 text-gray-700">Ad Type: In-Content Rectangle (300x250)</h2>
+                            <div class="max-w-[300px] float-left mr-6 mb-4">
+                                <div class="ad-placeholder" style="width: 300px; height: 250px;">
+                                    <img src="https://picsum.photos/300/250?random=2" alt="Ad 300x250">
+                                    <span class="absolute text-white bg-black bg-opacity-50 p-2 rounded">300x250 Ad</span>
+                                    <span class="ad-label">Advertisement</span>
+                                </div>
+                            </div>
+                            <p class="mb-4 leading-relaxed">The 300x250 Medium Rectangle is one of the most popular formats. Here it interrupts the content flow. Its versatility allows it to be placed within content streams, sidebars, or at the end of articles, often frustrating users trying to read.</p>
+                        </section>
+
+                        <div class="my-6 clear-both max-w-[300px] ml-auto">
+                            <div class="ad-placeholder" style="width: 300px; height: 250px;">
+                                <img src="https://picsum.photos/300/250?random=13" alt="Ad 300x250">
+                                <span class="ad-label">Advertisement</span>
+                            </div>
+                        </div>
+
+                        <!-- Ad Type: Expandable Banner -->
+                        <section id="dynamic" class="my-8 clear-both">
+                             <h2 class="text-xl font-semibold mb-3 text-gray-700">Ad Type: Expandable Banner (728x90 to 728x250)</h2>
+                             <p class="mb-4 leading-relaxed">Expandable ads offer a rich user experience. They start as a standard banner and expand upon user interaction (like a hover on desktop), revealing a larger creative. This format grabs attention without being intrusive on page load. Mouse over the ad below.</p>
+                             <div id="expandable-ad" class="expandable-ad-container relative w-full max-w-[728px] mx-auto bg-white p-2 rounded shadow">
+                                <img src="https://picsum.photos/728/250?random=12" alt="Expandable ad content">
+                                <span class="ad-label">Advertisement</span>
+                                <div class="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">Hover to expand</div>
+                            </div>
+                        </section>
+
+                        <!-- Ad Type: Content Locker -->
+                        <section class="my-8">
+                            <h2 class="text-xl font-semibold mb-3 text-gray-700">Ad Type: Content Locker</h2>
+                            <div id="content-locker" class="content-locked relative p-4 border rounded-lg">
+                                <div class="locked-text">
+                                    <p class="leading-relaxed">This is a highly valuable paragraph that users are eager to read. It contains the secret to eternal happiness, or perhaps just a very good cookie recipe. However, to continue reading, you must first interact with the prompt below. This "content locker" technique is a common, though often frustrating, way to force user engagement with an ad or a call-to-action before granting access to content.</p>
+                                </div>
+                                <div id="locker-overlay" class="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center">
+                                    <button id="unlock-content-btn" class="bg-green-600 text-white font-bold py-4 px-8 rounded-lg shadow-lg text-lg hover:bg-green-700 transition-transform hover:scale-105">
+                                        CLICK HERE to Continue Reading
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Ad Type: VAST / Video Ad -->
+                        <section id="video" class="my-8">
+                            <h2 class="text-xl font-semibold mb-3 text-gray-700">Ad Type: VAST / Pre-Roll Video Ad</h2>
+                            <div id="video-container" class="bg-black rounded-lg overflow-hidden relative aspect-video cursor-pointer">
+                                 <div id="video-ad-overlay" class="absolute inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center z-20 text-white p-4 text-center">
+                                    <h3 class="text-2xl font-bold">Your video will play after this short ad</h3>
+                                    <p class="text-lg mt-2">Click to start</p>
+                                    <p id="video-ad-countdown" class="mt-2 text-lg"></p>
+                                    <button id="skip-ad-btn" class="hidden absolute bottom-4 right-4 bg-gray-800 bg-opacity-70 text-white px-3 py-1 rounded text-sm hover:bg-opacity-90">Skip Ad</button>
+                                </div>
+                                <video id="ad-video" muted playsinline class="absolute inset-0 w-full h-full object-cover z-10">
+                                    <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" type="video/mp4">
+                                </video>
+                                <video id="main-video" controls playsinline class="hidden absolute inset-0 w-full h-full object-cover">
+                                    <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </section>
+                        
+                        <!-- Ad Type: Native Banners -->
+                        <section id="native" class="my-8">
+                            <h2 class="text-xl font-semibold mb-3 text-gray-700">Ad Type: Native Banners</h2>
+                            <p class="mb-4 leading-relaxed">Native ads blend seamlessly with the surrounding content, designed to look and feel like part of the website's editorial flow. This leads to higher engagement as they are perceived as less disruptive.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                <div class="border rounded-lg overflow-hidden group">
+                                    <img src="https://picsum.photos/400/250?random=3" alt="Article" class="w-full h-32 object-cover group-hover:opacity-80 transition-opacity">
+                                    <div class="p-4"><h3 class="font-bold text-md leading-tight">10 Web Design Trends Dominating This Year</h3><p class="text-sm text-gray-500 mt-2">websitedesign.com</p></div>
+                                </div>
+                                <div class="border rounded-lg overflow-hidden group relative">
+                                    <img src="https://picsum.photos/400/250?random=4" alt="Ad" class="w-full h-32 object-cover group-hover:opacity-80 transition-opacity">
+                                    <div class="p-4"><h3 class="font-bold text-md leading-tight">The Best VPN for Secure Browsing in 2024</h3><p class="text-sm text-gray-500 mt-2">securenet.com</p></div>
+                                    <span class="ad-label">Ad</span>
+                                </div>
+                                 <div class="border rounded-lg overflow-hidden group">
+                                    <img src="https://picsum.photos/400/250?random=5" alt="Article" class="w-full h-32 object-cover group-hover:opacity-80 transition-opacity">
+                                    <div class="p-4"><h3 class="font-bold text-md leading-tight">Mastering SEO: A Beginner's Guide</h3><p class="text-sm text-gray-500 mt-2">seojournal.io</p></div>
+                                </div>
+                            </div>
+                        </section>
+                    </article>
+                </main>
+
+                <!-- Sidebar -->
+                <aside class="lg:col-span-4 space-y-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                         <section>
+                            <h2 class="text-xl font-semibold mb-3 text-gray-700">Ad Type: Skyscraper (160x600)</h2>
+                             <div class="max-w-[160px] mx-auto">
+                                <div class="ad-placeholder" style="width: 160px; height: 600px;">
+                                     <img src="https://picsum.photos/160/600?random=6" alt="Ad 160x600">
+                                     <span class="absolute text-white text-lg bg-black bg-opacity-50 p-2 rounded">160x600 Ad</span>
+                                     <span class="ad-label">Advertisement</span>
+                                </div>
+                             </div>
+                        </section>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-xl font-semibold mb-3 text-gray-700">Ad Type: Pop-Up Bomb</h2>
+                        <p class="mb-4 text-gray-600">This button simulates a "Pop-up Bomb" which opens multiple ad windows at once. Use with caution!</p>
+                        <button id="popup-bomb-btn" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                            Launch Pop-up Bomb
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <!-- Ad Type: Mobile Banner (Sticky Footer) -->
+        <section class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-2px_5px_rgba(0,0,0,0.1)] p-2 z-40">
+            <h2 class="sr-only">Mobile Ad Banner</h2>
+            <div class="ad-placeholder max-w-[320px] h-[50px] mx-auto">
+                <img src="https://picsum.photos/320/50?random=7" alt="Ad 320x50">
+                <span class="absolute text-white text-sm bg-black bg-opacity-50 p-1 rounded">320x50 Banner</span>
+                <span class="ad-label">Ad</span>
+            </div>
+        </section>
+
+        <!-- Ad Type: In-Page Push (Social Bar) -->
+        <div id="social-bar" class="hidden fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-white rounded-lg shadow-2xl p-4 z-50 animate-slide-in-bottom">
+            <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
+                </div>
+                <div class="flex-grow">
+                    <h4 class="font-bold text-gray-900">Don't Miss Out!</h4>
+                    <p class="text-sm text-gray-600">This simulates a push notification opt-in, a popular ad format.</p>
+                    <div class="mt-3 flex space-x-2">
+                        <button class="flex-1 bg-blue-600 text-white text-sm font-semibold py-2 px-3 rounded-md hover:bg-blue-700">Allow</button>
+                        <button id="social-bar-close" class="flex-1 bg-gray-200 text-gray-700 text-sm font-semibold py-2 px-3 rounded-md hover:bg-gray-300">Later</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ad Type: Video Slider -->
+        <div id="video-slider-ad" class="video-slider-ad hidden fixed bottom-4 right-4 w-80 rounded-lg shadow-2xl overflow-hidden z-50 bg-black">
+            <div class="relative">
+                 <button id="video-slider-close" class="absolute top-1 right-1 z-20 text-white bg-black bg-opacity-50 rounded-full p-0.5 hover:bg-opacity-80">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+                <video id="slider-video-player" loop muted playsinline autoplay class="w-full aspect-video">
+                    <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" type="video/mp4">
+                </video>
+                <span class="ad-label">Video Ad</span>
+            </div>
+            <div class="p-2 bg-white">
+                <h5 class="font-bold text-sm text-gray-800">New Product Showcase</h5>
+                <p class="text-xs text-blue-600 hover:underline cursor-pointer">Visit website</p>
+            </div>
+        </div>
+
+        <!-- Ad Type: Floating Ad Bottom-Left -->
+        <div id="floater-ad-bl" class="floater-ad-bl hidden fixed bottom-4 left-4 w-72 rounded-lg shadow-2xl overflow-hidden z-50 bg-white">
+            <div class="relative">
+                <button class="floater-close-btn absolute top-1 right-1 z-20 text-gray-800 bg-white bg-opacity-50 rounded-full p-0.5 hover:bg-opacity-80">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+                <div class="ad-placeholder" style="width: 288px; height: 162px;">
+                    <img src="https://picsum.photos/300/170?random=14" alt="Floating Ad">
+                    <span class="ad-label">Advertisement</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Type: Floating Ad Bottom-Right (re-using video slider for demo) -->
+        <div id="floater-ad-br" class="floater-ad-br hidden fixed top-24 right-4 w-72 rounded-lg shadow-2xl overflow-hidden z-50 bg-white">
+            <div class="relative">
+                 <button class="floater-close-btn absolute top-1 right-1 z-20 text-gray-800 bg-white bg-opacity-50 rounded-full p-0.5 hover:bg-opacity-80">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+                <div class="ad-placeholder" style="width: 288px; height: 162px;">
+                    <img src="https://picsum.photos/300/170?random=15" alt="Floating Ad">
+                    <span class="ad-label">Advertisement</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Type: Full-Page Interstitial (Exit Intent) -->
+        <div id="interstitial-ad" class="hidden fixed inset-0 bg-black bg-opacity-80 z-[100] flex items-center justify-center p-4">
+            <div class="bg-white w-full max-w-2xl h-auto aspect-[4/3] rounded-lg shadow-2xl p-4 flex flex-col relative">
+                <div class="flex justify-between items-center border-b pb-2 mb-2">
+                    <span class="text-sm text-gray-500">Wait! Before you go...</span>
+                    <button id="interstitial-close-btn" class="text-gray-400 hover:text-gray-800">
+                        <span id="interstitial-countdown" class="text-sm mr-2">Please wait 10s...</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 inline-block hidden"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                <div class="flex-grow ad-placeholder">
+                    <img src="https://picsum.photos/800/600?random=8" alt="Interstitial Ad" class="w-full h-full object-cover">
+                     <span class="absolute text-3xl text-white bg-black bg-opacity-50 p-4 rounded">Special Offer!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const createPopup = () => {
+                const popWindow = window.open('about:blank', '_blank', 'width=400,height=300');
+                if(popWindow){
+                    popWindow.document.write(`<html lang="en"><head><title>Advertisement</title></head><body style="margin:0; padding:0; display:flex; justify-content:center; align-items:center; height:100vh; background-color:#f0f0f0; flex-direction:column; gap:1rem;"><h1 style="font-family:sans-serif; color:#333;">This is a Pop Ad</h1><img src="https://picsum.photos/300/200?random=${Math.random()}" alt="ad"/></body></html>`);
+                    window.focus(); 
+                }
+            };
+            
+            // --- Pop-Under on First Click, then Pop-up on every article click ---
+            document.body.addEventListener('click', createPopup, { once: true });
+            const mainContent = document.getElementById('main-content');
+            if(mainContent) {
+                mainContent.addEventListener('click', createPopup);
+            }
+
+            // --- Popup Bomb Logic ---
+            const popupBombBtn = document.getElementById('popup-bomb-btn');
+            if (popupBombBtn) {
+                popupBombBtn.addEventListener('click', () => {
+                    for (let i = 0; i < 5; i++) {
+                        createPopup();
+                    }
+                });
+            }
+
+            // --- Social Bar Logic ---
+            const socialBar = document.getElementById('social-bar');
+            if (socialBar) {
+                const socialBarClose = document.getElementById('social-bar-close');
+                setTimeout(() => {
+                    socialBar.classList.remove('hidden');
+                }, 5000); // Show after 5 seconds
+                socialBarClose.addEventListener('click', () => {
+                    socialBar.style.display = 'none';
+                });
+            }
+
+            // --- Exit Intent Interstitial Ad Logic ---
+            const interstitialAd = document.getElementById('interstitial-ad');
+            if (interstitialAd) {
+                const interstitialCloseBtn = document.getElementById('interstitial-close-btn');
+                const countdownSpan = document.getElementById('interstitial-countdown');
+                const closeIcon = interstitialCloseBtn.querySelector('svg');
+                let interstitialShown = false;
+
+                const showInterstitial = () => {
+                    if (interstitialShown) return;
+                    interstitialShown = true;
+                    interstitialAd.classList.remove('hidden');
+                    interstitialAd.classList.add('visible');
+                    
+                    let count = 10;
+                    countdownSpan.textContent = `Please wait ${count}s...`;
+                    countdownSpan.style.display = 'inline';
+                    closeIcon.classList.add('hidden');
+
+                    const interval = setInterval(() => {
+                        count--;
+                        if (count > 0) {
+                            countdownSpan.textContent = `Please wait ${count}s...`;
+                        } else {
+                            clearInterval(interval);
+                            countdownSpan.textContent = `Close Ad`;
+                            closeIcon.classList.remove('hidden');
+                        }
+                    }, 1000);
+                }
+                
+                document.documentElement.addEventListener('mouseleave', (e) => {
+                    if (e.clientY < 10) { // If mouse leaves near the top of the viewport
+                       showInterstitial();
+                    }
+                });
+
+                interstitialCloseBtn.addEventListener('click', () => {
+                    if (countdownSpan.textContent === 'Close Ad') {
+                        interstitialAd.classList.add('hidden');
+                    }
+                });
+            }
+
+            // --- Video Ad Logic ---
+            const videoContainer = document.getElementById('video-container');
+            if(videoContainer) {
+                const adOverlay = document.getElementById('video-ad-overlay');
+                const adVideo = document.getElementById('ad-video');
+                const mainVideo = document.getElementById('main-video');
+                const countdownEl = document.getElementById('video-ad-countdown');
+                const skipBtn = document.getElementById('skip-ad-btn');
+                let adInterval;
+
+                const playMainVideo = () => {
+                    clearInterval(adInterval);
+                    adOverlay.style.display = 'none';
+                    adVideo.style.display = 'none';
+                    adVideo.pause();
+                    mainVideo.classList.remove('hidden');
+                    mainVideo.play();
+                    videoContainer.style.cursor = 'default';
+                };
+                
+                const startAd = () => {
+                    adVideo.play();
+                    adOverlay.querySelector('h3').textContent = "Ad playing...";
+                    adOverlay.querySelector('p').textContent = "";
+                };
+
+                videoContainer.addEventListener('click', startAd, { once: true });
+
+                adVideo.addEventListener('play', () => {
+                     adInterval = setInterval(() => {
+                        const remainingTime = Math.ceil(adVideo.duration - adVideo.currentTime);
+                        if (!isNaN(remainingTime)) {
+                            countdownEl.textContent = `Ad will end in ${remainingTime} seconds`;
+                        }
+                        if (adVideo.currentTime > 5) {
+                            skipBtn.classList.remove('hidden');
+                        }
+                    }, 1000);
+                });
+                
+                adVideo.addEventListener('ended', playMainVideo);
+                skipBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    playMainVideo();
+                });
+            }
+
+            // --- Expandable Ad Logic ---
+            const expandableAd = document.getElementById('expandable-ad');
+            if (expandableAd) {
+                expandableAd.addEventListener('mouseenter', () => {
+                    expandableAd.classList.add('expanded');
+                });
+                expandableAd.addEventListener('mouseleave', () => {
+                    expandableAd.classList.remove('expanded');
+                });
+            }
+
+            // --- Floating & Slider Ads Logic ---
+            const initFloatingAd = (adId, showDelay) => {
+                const adElement = document.getElementById(adId);
+                if (!adElement) return;
+
+                const closeBtn = adElement.querySelector('.floater-close-btn') || adElement.querySelector('#video-slider-close');
+                
+                setTimeout(() => {
+                    adElement.classList.remove('hidden');
+                    adElement.classList.add('visible');
+                }, showDelay);
+
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        adElement.style.display = 'none';
+                    });
+                }
+            };
+            initFloatingAd('video-slider-ad', 8000);
+            initFloatingAd('floater-ad-bl', 3000);
+            initFloatingAd('floater-ad-br', 5000);
+
+
+            // --- Content Locker Logic ---
+            const unlockBtn = document.getElementById('unlock-content-btn');
+            if (unlockBtn) {
+                unlockBtn.addEventListener('click', () => {
+                    createPopup(); // Also trigger a popup when unlocking
+                    const locker = document.getElementById('content-locker');
+                    const overlay = document.getElementById('locker-overlay');
+                    if (locker && overlay) {
+                        locker.classList.remove('content-locked');
+                        overlay.style.display = 'none';
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

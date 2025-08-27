@@ -1,0 +1,5 @@
+{
+  "name": "Ad Banner Showcase",
+  "description": "A static HTML page demonstrating various ad banner formats suitable for ad networks like Adstera. Includes standard banners, pop-unders, native ads, video ads, and more, styled with Tailwind CSS.",
+  "requestFramePermissions": []
+}
